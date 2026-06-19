@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fusion AI Support Assistant</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Fusion AI Support Assistant</h1>
+
+        <p class="subtitle">
+            Oracle Fusion HCM Troubleshooting Agent
+        </p>
+
+        <select id="module">
+            <option>Core HR</option>
+            <option>Payroll</option>
+            <option>Absence Management</option>
+            <option>Recruitment</option>
+        </select>
+
+        <textarea
+            id="issue"
+            placeholder="Describe your Oracle Fusion issue here..."
+        ></textarea>
+
+        <button id="analyzeBtn">
+            Analyze Issue
+        </button>
+
+        <div id="response">
+
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
