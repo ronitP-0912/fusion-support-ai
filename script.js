@@ -1,9 +1,9 @@
 const analyzeBtn = document.getElementById("analyzeBtn");
 
-analyzeBtn.addEventListener("click", function () {
+analyzeBtn.addEventListener("click", async function () {
 
     const issue =
-        document.getElementById("issue").value.toLowerCase();
+        document.getElementById("issue").value;
 
     const response =
         document.getElementById("response");
@@ -13,124 +13,55 @@ analyzeBtn.addEventListener("click", function () {
         <p>Please wait...</p>
     `;
 
-    setTimeout(() => {
+    try {
 
-        let result = "";
+        const result = await fetch(
+            "http://localhost:3000/analyze",
+            {
+                method: "POST",
 
-        if(issue.includes("payroll")){
+                headers: {
+                    "Content-Type":
+                        "application/json"
+                },
 
-            result = `
-            <h3>Issue Summary</h3>
-            <p>Payroll process failure detected.</p>
+                body: JSON.stringify({
+                    issue
+                })
+            }
+        );
 
-            <h3>Possible Causes</h3>
-            <ul>
-                <li>Missing payroll parameters</li>
-                <li>Employee validation error</li>
-                <li>Payroll flow not configured</li>
-            </ul>
+        const data =
+            await result.json();
 
-            <h3>Resolution Steps</h3>
-            <ol>
-                <li>Navigate to Payroll Checklist</li>
-                <li>Review process logs</li>
-                <li>Validate payroll parameters</li>
-                <li>Rerun payroll process</li>
-            </ol>
+        response.innerHTML = `
+            <h3>AI Analysis</h3>
 
-            <h3>Confidence Score</h3>
-            <p>85%</p>
-
-            <button class="escalateBtn">
-                Contact Support Team
-            </button>
-            `;
-
-        }
-
-        else if(issue.includes("leave")){
-
-            result = `
-            <h3>Issue Summary</h3>
-            <p>Leave request submission issue detected.</p>
-
-            <h3>Possible Causes</h3>
-            <ul>
-                <li>Leave type not assigned</li>
-                <li>Insufficient balance</li>
-                <li>Approval workflow issue</li>
-            </ul>
-
-            <h3>Resolution Steps</h3>
-            <ol>
-                <li>Check leave balances</li>
-                <li>Verify leave eligibility</li>
-                <li>Review approval rules</li>
-            </ol>
-
-            <h3>Confidence Score</h3>
-            <p>88%</p>
+            <pre style="
+                white-space: pre-wrap;
+                font-family: inherit;
+            ">
+${data.answer}
+            </pre>
 
             <button class="escalateBtn">
                 Contact Support Team
             </button>
-            `;
-        }
+        `;
 
-        else if(issue.includes("role")
-            || issue.includes("access")
-            || issue.includes("permission")){
+    }
 
-            result = `
-            <h3>Issue Summary</h3>
-            <p>Security role issue detected.</p>
+    catch (error) {
 
-            <h3>Possible Causes</h3>
-            <ul>
-                <li>Missing role assignment</li>
-                <li>Data access restriction</li>
-                <li>Expired user privileges</li>
-            </ul>
+        response.innerHTML = `
+            <h3>Error</h3>
 
-            <h3>Resolution Steps</h3>
-            <ol>
-                <li>Review user roles</li>
-                <li>Check data access settings</li>
-                <li>Reassign required role</li>
-            </ol>
-
-            <h3>Confidence Score</h3>
-            <p>91%</p>
-
-            <button class="escalateBtn">
-                Contact Support Team
-            </button>
-            `;
-        }
-
-        else{
-
-            result = `
-            <h3>Issue Summary</h3>
-            <p>Issue captured successfully.</p>
-
-            <h3>AI Assessment</h3>
             <p>
-                Additional information is required
-                to determine the root cause.
+                Unable to contact AI service.
             </p>
+        `;
 
-            <h3>Confidence Score</h3>
-            <p>40%</p>
-
-            <button class="escalateBtn">
-                Contact Support Team
-            </button>
-            `;
-        }
-
-        response.innerHTML = result;
-
-    }, 2000);
+        console.error(error);
+    }
 
 });
