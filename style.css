@@ -49,3 +49,33 @@ button{
     padding:20px;
     border-radius:10px;
 }
+
+#response h3{
+    color:#60a5fa;
+}
+
+#response ul,
+#response ol{
+    margin-left:20px;
+}
+
+#response p,
+#response li{
+    line-height:1.6;
+}
+
+.escalateBtn{
+    background:#dc2626;
+    color:white;
+    border:none;
+    padding:12px 20px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+input[type="file"]{
+    width:100%;
+    margin-top:15px;
+    margin-bottom:15px;
+    color:white;
+}
